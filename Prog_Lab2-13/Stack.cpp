@@ -113,7 +113,6 @@ int removeStack(stack& q, int index)
 		cur = cur->next;
 		tmp++;
 	}
-	//îøèáêà êîãäà ñòıê èç 1 ıëåìåíòà
 
 
 	int d = cur->next->data;
