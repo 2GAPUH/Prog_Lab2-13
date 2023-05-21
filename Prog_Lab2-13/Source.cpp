@@ -43,9 +43,11 @@ void loopStack()
 	stack myStack2;
 	stack chosenStack;
 	int choice = 0;
+	bool flag = 1;
+	int max = -1, min = 10;
 	int tmp = 0, index = 0, tmp2 = 0;
 
-	while (true)
+	while (flag)
 	{
 
 		printf_s("0 - Exit \n1 - Add element \n2 - Delete element \n3 - Clear stack \n4 - Atach stack \n5 - Clone stack in reverse order \n\
@@ -59,7 +61,7 @@ void loopStack()
 		switch (choice)
 		{
 		case 0:
-			return;
+			flag = 0;
 			break;
 
 		case 1:
@@ -88,7 +90,20 @@ void loopStack()
 			break;
 
 		case 5:
-			cloneReverseStack(myStack1, myStack2);
+			max = -1, min = 10;
+			while (getchar() != '\n');
+			printf_s("Enter your number: ");
+			while ((tmp = getchar()) != '\n')
+			{
+				tmp -= '0';
+				if (tmp > max)
+					max = tmp;
+				if (tmp < min)
+					min = tmp;
+				pushStack(myStack1, tmp);
+			}
+			if (max != -1)
+				printf_s("max = %d\t min = %d\n", max, min);
 			break;
 
 		case 6:
@@ -133,8 +148,10 @@ void loopStack()
 					break;
 				printf_s("Invalid value.\n");
 			}
-			printf_s("Stack[%d] = %d\n", index, lookAtStack(chosenStack, index));
+			if((tmp = lookAtStack(chosenStack, index)) != INT_MAX)
+				printf_s("Stack[%d] = %d\n", index, tmp);
 			break;
+			
 
 		default:
 			printf_s("Invalid choice.\n");

@@ -4,9 +4,7 @@
 
 inline bool stackIsEmpty(const stack& q)
 {
-	if (q.head == 0)
-		return 1;
-	return 0;
+	return q.head == NULL;
 }
 
 void pushStack(stack& q, int d)
@@ -36,6 +34,7 @@ void printStack(stack& q)
 	printf_s("\b\b\b   \n");
 }
 
+
 void freeStack(stack& q)
 {
 	while (!stackIsEmpty(q))
@@ -48,7 +47,11 @@ void freeStack(stack& q)
 
 void atachStack(stack &q1, stack &q2)
 {
+	if (stackIsEmpty(q2))
+		return;
+
 	element* cur = q2.head;
+	
 	
 	while (cur->next != 0)
 		cur = cur->next;
@@ -59,16 +62,11 @@ void atachStack(stack &q1, stack &q2)
 	q2.head = 0;
 }
 
-
-void cloneReverseStack(stack& q1, stack& q2)
-{
-	freeStack(q1);
-	for (element* cur = q2.head; cur != 0; cur = cur->next)
-		pushStack(q1, cur->data);
-}
-
 void insertStack(stack& q, int d, int beforeIndex)
 {
+	if (stackIsEmpty(q))
+		return;
+
 	element* cur = q.head;
 	int tmp = 1;
 	while (tmp != beforeIndex)
@@ -90,8 +88,17 @@ int removeStack(stack& q, int index)
 	if (stackIsEmpty(q))
 		return INT_MAX;
 
-	element* cur = q.head;
 	int tmp = 1;
+
+	if (q.head->next == 0)
+	{
+		tmp = q.head->data;
+		q.head = NULL;
+		return tmp;
+	}
+
+	element* cur = q.head;
+
 
 	while (tmp != index)
 	{
@@ -106,6 +113,8 @@ int removeStack(stack& q, int index)
 		cur = cur->next;
 		tmp++;
 	}
+	//ошибка когда стэк из 1 элемента
+
 
 	int d = cur->next->data;
 	element* e = cur->next;
